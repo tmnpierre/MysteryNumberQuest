@@ -4,54 +4,34 @@
     {
         static void Main(string[] args)
         {
-            Random random = new Random();
-            int mysteryNumber = random.Next(1, 101);
-            int maxAttempts = 5;
-            int attempts = 0;
-            bool isGuessedCorrectly = false;
-            int lowerBound = 1;
-            int upperBound = 100;
+            const int MaxAttempts = 5, LowerBound = 1, UpperBound = 100;
+            var random = new Random();
+            int mysteryNumber = random.Next(LowerBound, UpperBound + 1), attempts;
 
-            Console.WriteLine("The mystery number has been generated. Try to guess it!");
-            Console.WriteLine($"You have {maxAttempts} attempts.");
+            Console.WriteLine("Guess the mystery number between 1 and 100. You have 5 attempts.");
 
-            while (attempts < maxAttempts && !isGuessedCorrectly)
+            for (attempts = 0; attempts < MaxAttempts; attempts++)
             {
-                Console.Write($"Enter your guess (between {lowerBound} and {upperBound}): ");
-                int guess;
-                if (int.TryParse(Console.ReadLine(), out guess) && guess >= lowerBound && guess <= upperBound)
+                Console.Write($"Attempt {attempts + 1}/{MaxAttempts}. Enter your guess: ");
+                if (!int.TryParse(Console.ReadLine(), out int guess) || guess < LowerBound || guess > UpperBound)
                 {
-                    if (guess == mysteryNumber)
-                    {
-                        Console.WriteLine("Correct! Congratulations, you've guessed the mystery number.");
-                        isGuessedCorrectly = true;
-                    }
-                    else
-                    {
-                        Console.WriteLine(guess < mysteryNumber ? "Too small. Try again." : "Too big. Try again.");
-                        Console.WriteLine($"Hint: The mystery number is {(mysteryNumber % 2 == 0 ? "even" : "odd")}.");
-                        if (attempts < maxAttempts - 1)
-                        {
-                            Console.WriteLine($"Additional hint: The number is between {lowerBound} and {upperBound}.");
-                        }
-                        attempts++;
-                    }
+                    Console.WriteLine($"Please enter a number between {LowerBound} and {UpperBound}.");
+                    continue;
                 }
-                else
+
+                if (guess == mysteryNumber)
                 {
-                    Console.WriteLine($"Invalid input. Please enter a number between {lowerBound} and {upperBound}.");
+                    Console.WriteLine("Correct! You've guessed the mystery number.");
+                    break;
                 }
+
+                Console.WriteLine(guess < mysteryNumber ? "Too low." : "Too high.");
+                Console.WriteLine($"Hint: The number is {(mysteryNumber % 2 == 0 ? "even" : "odd")}.");
             }
 
-            if (isGuessedCorrectly)
-            {
-                int score = (maxAttempts - attempts) * 20;
-                Console.WriteLine($"Well done! Your score is: {score}");
-            }
-            else
-            {
-                Console.WriteLine($"Sorry, you've used all your attempts. The mystery number was {mysteryNumber}. No points awarded.");
-            }
+            Console.WriteLine(attempts < MaxAttempts
+                ? $"Well done! Your score is: {(MaxAttempts - attempts) * 20}"
+                : $"Sorry, you've used all your attempts. The mystery number was {mysteryNumber}.");
         }
     }
 }
