@@ -6,7 +6,7 @@
         {
             Random random = new Random();
             int mysteryNumber = random.Next(1, 101);
-            int maxAttempts = 5; 
+            int maxAttempts = 5;
             int attempts = 0;
             bool isGuessedCorrectly = false;
 
@@ -21,14 +21,18 @@
                 {
                     if (guess == mysteryNumber)
                     {
-                        Console.WriteLine("Congratulations! You've guessed the mystery number.");
+                        Console.WriteLine("Correct! Congratulations, you've guessed the mystery number.");
                         isGuessedCorrectly = true;
+                    }
+                    else if (guess < mysteryNumber)
+                    {
+                        Console.WriteLine("Too small. Try again.");
                     }
                     else
                     {
-                        Console.WriteLine(guess < mysteryNumber ? "Too low. Try again." : "Too high. Try again.");
-                        attempts++;
+                        Console.WriteLine("Too big. Try again.");
                     }
+                    attempts++;
                 }
                 else
                 {
