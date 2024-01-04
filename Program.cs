@@ -28,23 +28,12 @@
                     }
                     else
                     {
-                        if (guess < mysteryNumber)
-                        {
-                            Console.WriteLine("Too small. Try again.");
-                            lowerBound = guess + 1;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Too big. Try again.");
-                            upperBound = guess - 1;
-                        }
-
+                        Console.WriteLine(guess < mysteryNumber ? "Too small. Try again." : "Too big. Try again.");
                         Console.WriteLine($"Hint: The mystery number is {(mysteryNumber % 2 == 0 ? "even" : "odd")}.");
-                        if (attempts < maxAttempts - 1) 
+                        if (attempts < maxAttempts - 1)
                         {
                             Console.WriteLine($"Additional hint: The number is between {lowerBound} and {upperBound}.");
                         }
-
                         attempts++;
                     }
                 }
@@ -54,9 +43,14 @@
                 }
             }
 
-            if (!isGuessedCorrectly)
+            if (isGuessedCorrectly)
             {
-                Console.WriteLine($"Sorry, you've used all your attempts. The mystery number was {mysteryNumber}.");
+                int score = (maxAttempts - attempts) * 20;
+                Console.WriteLine($"Well done! Your score is: {score}");
+            }
+            else
+            {
+                Console.WriteLine($"Sorry, you've used all your attempts. The mystery number was {mysteryNumber}. No points awarded.");
             }
         }
     }
